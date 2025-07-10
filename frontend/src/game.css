@@ -1,0 +1,315 @@
+/* game.css */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #a2d5f2, #4acfd5);
+  color: #003366;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  padding-top: 0;
+  text-align: center;
+}
+
+header {
+  font-size: 3rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  padding-top: 0px;
+  margin-top: 0px;
+  color: #003366;
+  text-shadow: 0 0 8px #4acfd5;
+  letter-spacing: 0.2rem;
+  user-select: none;
+}
+
+/* Main container for board + number pad */
+main {
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  flex-wrap: nowrap; /* erlaubt Umbruch auf kleinen Bildschirmen */
+  max-width: 100vw;
+}
+
+/* Sudoku Board container */
+.board-container {
+  width: 83vw;          /* 90% der Viewportbreite */
+  max-width: 600px;     /* maximale Breite auf großen Bildschirmen */
+  min-width: 300px;     /* minimale Breite */
+  aspect-ratio: 1 / 1;  /* Quadrat erzwingen */
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  gap: 2px;
+  background-color: #e0f7fa;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0077b6aa;
+  user-select: none;
+}
+
+/* Jede Zelle */
+.cell {
+  background-color: #b4e0e9;
+  border: 1.5px solid #00acc1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: clamp(1rem, 1.7vw, 1.6rem);
+  font-weight: 700;
+  color: #003366;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+  aspect-ratio: 1 / 1; /* Quadratisch */
+  user-select: none;
+}
+
+.cell:hover {
+  background-color: #4acfd5;
+  color: white;
+  box-shadow: 0 0 8px #00838f;
+}
+
+/* Dickere Ränder für 3x3 Blöcke */
+
+/* vertikale dickere Ränder */
+.cell:nth-child(3n) {
+  border-right-width: 3.5px;
+}
+.cell:nth-child(1),
+.cell:nth-child(10),
+.cell:nth-child(19),
+.cell:nth-child(28),
+.cell:nth-child(37),
+.cell:nth-child(46),
+.cell:nth-child(55),
+.cell:nth-child(64),
+.cell:nth-child(73) {
+  border-left-width: 3.5px;
+}
+
+/* horizontale dickere Ränder */
+.cell:nth-child(n + 19):nth-child(-n + 27),
+.cell:nth-child(n + 46):nth-child(-n + 54) {
+  border-bottom-width: 3.5px;
+}
+.cell:nth-child(-n + 9) {
+  border-top-width: 3.5px;
+}
+
+/* Number Pad Sidebar */
+.number-pad {
+  max-width: 10vw;
+  background-color: #b4e0e9cc;
+  border-radius: 12px;
+  padding: 0.5rem;
+  box-shadow: 0 0 15px #00acc1aa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  user-select: none;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Titel Number Pad */
+.number-pad h4 {
+  margin-bottom: 0.6rem;
+  font-weight: 700;
+  color: #0077b6;
+  user-select: none;
+}
+
+/* Jede Zahl */
+.number {
+  width: 40px;
+  height: 40px;
+  background-color: #4acfd5;
+  margin: 4px 0;
+  border-radius: 8px;
+  color: #003366;
+  font-weight: 800;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 2px solid transparent;
+  box-shadow: 0 2px 5px #0077b6aa;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.number:hover,
+.number.selected {
+  background-color: #0077b6;
+  color: #e0f7fa;
+  border-color: #003366;
+  box-shadow: 0 0 15px #00acc1f0;
+}
+
+/* Clear Button */
+.clear-btn {
+  padding: 6px 10px;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: #0077b6;
+  color: #e0f7fa;
+  box-shadow: 0 0 15px #00acc1f0;
+  border: none;
+  transition: background-color 0.3s ease;
+  user-select: none;
+}
+
+.clear-btn:hover {
+  background-color: #004d66;
+}
+
+/* Mistakes Counter */
+.mistakes {
+  margin-top: 1rem;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #b71c1c;
+  text-shadow: 0 0 3px #f44336;
+  user-select: none;
+}
+
+/* Messages */
+.validation-message {
+  margin-top: 0.8rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #004d66;
+}
+
+.error-message {
+  margin-top: 0.5rem;
+  color: #d32f2f;
+  font-weight: 700;
+}
+
+/* Footer */
+footer {
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #003366cc;
+  font-weight: 600;
+  user-select: none;
+}
+
+
+/* Responsive: Nummern-Pad unter dem Board auf kleinen Bildschirmen, Zahlen in einer Reihe */
+@media (max-width: 600px) {
+  main {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .board-container {
+    width: 95vw;
+    max-width: 95vw;
+    min-width: 250px;
+  }
+
+  .number-pad {
+    width: 95vw;
+    max-width: 95vw;
+    min-width: 250px;
+    margin: 0 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 0.5rem 0.3rem;
+  }
+
+  .number-pad h4 {
+    display: none;
+  }
+
+  .number {
+    width: 30px;
+    height: 30px;
+    margin: 0 6px;
+    font-size: 1rem;
+    border-radius: 6px;
+  }
+
+  .clear-btn {
+    padding: 6px 16px;
+  }
+
+  .mistakes {
+    margin-top: 1rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+/* Board message container */
+.board-message {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  min-height: 1.2em; /* Platz reservieren */
+  transition: opacity 0.3s;
+}
+
+.error-message {
+  color: #e63946;
+}
+
+.validation-message {
+  color: #0077b6;
+}
+
+
+.head-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  display: flex;
+}
+
+/* Bei maximal 450px Breite vertikal anordnen */
+@media (max-width: 450px) {
+  .head-container {
+    flex-direction: column;
+    align-items: center; /* zentriert die Items in der Spalte */
+    margin: 0;
+    gap: 0;
+  }
+}
+
+
+/* Highlight selected number cells with a green border */
+.highlighted {
+  border: 3px solid #28a745 !important; /* bootstrap green, or choose your own */
+  box-shadow: 0 0 10px #28a745aa;
+  transition: border-color 0.3s ease;
+}
+.number.disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  pointer-events: none;
+  opacity: 0.6;
+}
